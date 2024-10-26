@@ -4,3 +4,10 @@ type User {
   latestGreeting: String!
   numberOfGreetings: Int!
 }
+
+type Account {
+  id: ID!
+  chainId: Int!
+  address: String!
+  factory: String!
+}
