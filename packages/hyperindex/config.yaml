@@ -7,9 +7,56 @@ contracts:
     events:
       - event: AccountDeployed(bytes32 indexed userOpHash, address indexed sender, address factory, address paymaster)
 networks:
-  - id: 137 # Polygon
+  - id: 1
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
-        address: "0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 11155111
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 10
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 11155420
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 137
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 80002
+    hypersync_config:
+      endpoint_url: "https://amoy.hypersync.xyz"
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 8453
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 84532
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 42161
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+  - id: 421614
+    start_block: 0
+    contracts:
+      - name: EntryPointV0_7_0
+        address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
 rollback_on_reorg: false
