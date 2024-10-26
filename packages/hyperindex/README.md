@@ -1,3 +1,3 @@
-## Envio Greeter Template
+## ERC7579 Indexer
 
-*Please refer to the [documentation website](https://docs.envio.dev) for a thorough guide on all Envio indexer features*
+Envio Hyperindex that indexes ERC7579-compatible accounts.
