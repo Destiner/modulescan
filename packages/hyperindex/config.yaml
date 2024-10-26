@@ -11,7 +11,7 @@ contracts:
     handler: ./src/erc7579Account.ts
     events:
       - event: ModuleInstalled(uint256 moduleTypeId, address module)
-      - event: ModuleUninstalled(uint256 moduleTypeId, address module)
+      # - event: ModuleUninstalled(uint256 moduleTypeId, address module)
 field_selection:
   transaction_fields:
     - hash
