@@ -6,32 +6,43 @@ contracts:
     handler: ./src/entryPoint.ts
     events:
       - event: AccountDeployed(bytes32 indexed userOpHash, address indexed sender, address factory, address paymaster)
+  - name: ERC7579Account
+    abi_file_path: ./abis/erc7579Account.json
+    handler: ./src/erc7579Account.ts
+    events:
+      - event: ModuleInstalled(uint256 moduleTypeId, address module)
+      - event: ModuleUninstalled(uint256 moduleTypeId, address module)
 networks:
   - id: 1
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 11155111
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 10
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 11155420
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 137
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 80002
     hypersync_config:
       endpoint_url: "https://amoy.hypersync.xyz"
@@ -39,24 +50,29 @@ networks:
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 8453
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 84532
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 42161
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
   - id: 421614
     start_block: 0
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727de22e5e9d8baf0edac6f37da032"
+      - name: ERC7579Account
 rollback_on_reorg: false
