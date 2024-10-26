@@ -1,5 +1,5 @@
 {
-  "name": "ERC7579 Indexer",
+  "name": "modulescan-hyperindex",
   "version": "0.1.0",
   "scripts": {
     "clean": "tsc --clean",
@@ -12,7 +12,7 @@
     "start": "ts-node generated/src/Index.bs.js"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.11",    
+    "@types/chai": "^4.3.11",
     "@types/mocha": "10.0.6",
     "@types/node": "20.8.8",
     "ts-mocha": "^10.0.0",
