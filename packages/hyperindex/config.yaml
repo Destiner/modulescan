@@ -11,6 +11,11 @@ contracts:
     events:
       - event: NewGreeting
       - event: ClearGreeting
+  - name: EntryPointV0_7_0
+    abi_file_path: ./abis/entryPointV0_7_0.json
+    handler: ./src/entryPoint.ts
+    events:
+      - event: AccountDeployed(bytes32 indexed userOpHash, address indexed sender, address factory, address paymaster)
 networks:
   - id: 137 # Polygon
     start_block: 45336336
