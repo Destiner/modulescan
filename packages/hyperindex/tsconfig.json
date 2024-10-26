@@ -1,33 +1,21 @@
 {
   "compilerOptions": {
-    /* Base */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ES2022",
+    "target": "es2020", //required for use with BigInt types
+    "lib": [
+      "es2020"
+    ],
     "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    /* Strictness */
+    "checkJs": false,
+    "outDir": "build",
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
-    // "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noFallthroughCasesInSwitch": true,
-    "noPropertyAccessFromIndexSignature": false,
-    /* No transpiling */
-    "moduleResolution": "Bundler",
-    "module": "esnext",
-    "noEmit": true,
-    /* Browser-specific */
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    /* Imports */
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"]
-    }
-  }
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "module": "CommonJS"
+  },
+  "include": [
+    "src",
+    "test"
+  ]
 }

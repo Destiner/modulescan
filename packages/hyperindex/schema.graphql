@@ -1,6 +1,6 @@
-type Account {
+type User {
   id: ID!
-  chainId: Int!
-  address: String!
-  factory: String!
+  greetings: [String!]!
+  latestGreeting: String!
+  numberOfGreetings: Int!
 }
