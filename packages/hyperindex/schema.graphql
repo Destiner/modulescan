@@ -4,6 +4,7 @@ type Account {
   address: String!
   factory: String!
   modules: [InstalledModule!]! @derivedFrom(field: "account")
+  createdAt: Int!
 }
 
 type AccountModule {
@@ -29,6 +30,7 @@ type ModuleInstallation {
   blockNumber: Int!
   txHash: String!
   logIndex: Int!
+  timestamp: Int!
 }
 
 type ModuleUninstallation {
@@ -40,4 +42,5 @@ type ModuleUninstallation {
   blockNumber: Int!
   txHash: String!
   logIndex: Int!
+  timestamp: Int!
 }

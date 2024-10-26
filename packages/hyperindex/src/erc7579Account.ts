@@ -56,6 +56,7 @@ async function handleModuleInstalledEvent(
     blockNumber: event.block.number,
     txHash: txHash,
     logIndex: logIndex,
+    timestamp: event.block.timestamp,
   });
 }
 
@@ -85,5 +86,6 @@ async function handleModuleInstalledEvent(
 //     blockNumber: event.block.number,
 //     txHash: txHash,
 //     logIndex: logIndex,
+//     timestamp: event.block.timestamp,
 //   });
 // }

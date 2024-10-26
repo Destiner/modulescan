@@ -37,6 +37,7 @@ async function handleAccountDeployedEvent(
 ) {
   const factory = event.params.factory.toLowerCase();
   const address = event.params.sender.toLowerCase();
+  const createdAt = event.block.timestamp;
 
   if (factory !== KERNEL_V3_META_FACTORY_ADDRESS) {
     return;
@@ -47,5 +48,6 @@ async function handleAccountDeployedEvent(
     chainId: event.chainId,
     address,
     factory,
+    createdAt,
   });
 }
