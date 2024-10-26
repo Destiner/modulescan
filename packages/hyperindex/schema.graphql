@@ -1,10 +1,3 @@
-type User {
-  id: ID!
-  greetings: [String!]!
-  latestGreeting: String!
-  numberOfGreetings: Int!
-}
-
 type Account {
   id: ID!
   chainId: Int!
