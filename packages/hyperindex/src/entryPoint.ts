@@ -20,9 +20,11 @@ function handleAccountDeployedContractRegister(
   const address = event.params.sender.toLowerCase();
   const factory = event.params.factory.toLowerCase();
 
-  if (factory === KERNEL_V3_META_FACTORY_ADDRESS) {
-    context.addERC7579Account(address);
+  if (factory !== KERNEL_V3_META_FACTORY_ADDRESS) {
+    return;
   }
+
+  context.addERC7579Account(address);
 }
 
 EntryPointV0_7_0.AccountDeployed.handler(async ({ event, context }) => {
@@ -35,6 +37,10 @@ async function handleAccountDeployedEvent(
 ) {
   const factory = event.params.factory.toLowerCase();
   const address = event.params.sender.toLowerCase();
+
+  if (factory !== KERNEL_V3_META_FACTORY_ADDRESS) {
+    return;
+  }
 
   context.Account.set({
     id: `${event.chainId}-${address}`,
