@@ -17,6 +17,9 @@ importers:
       ethers:
         specifier: 6.8.0
         version: 6.8.0
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
     devDependencies:
       '@types/chai':
         specifier: ^4.3.11
@@ -34,11 +37,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(mocha@10.2.0)
       ts-node:
-        specifier: 10.9.1
-        version: 10.9.1(@types/node@20.8.8)(typescript@5.2.2)
-      typescript:
-        specifier: 5.2.2
-        version: 5.2.2
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.8.8)(typescript@5.6.3)
 
   generated:
     dependencies:
@@ -119,7 +119,7 @@ importers:
         version: link:..
       viem:
         specifier: 2.21.0
-        version: 2.21.0(typescript@5.2.2)
+        version: 2.21.0(typescript@5.6.3)
       yargs:
         specifier: 17.7.2
         version: 17.7.2
@@ -1359,8 +1359,8 @@ packages:
     peerDependencies:
       mocha: ^3.X.X || ^4.X.X || ^5.X.X || ^6.X.X || ^7.X.X || ^8.X.X || ^9.X.X || ^10.X.X
 
-  ts-node@10.9.1:
-    resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
+  ts-node@10.9.2:
+    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
@@ -1400,8 +1400,8 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1664,9 +1664,9 @@ snapshots:
 
   '@types/yoga-layout@1.9.2': {}
 
-  abitype@1.0.5(typescript@5.2.2):
+  abitype@1.0.5(typescript@5.6.3):
     optionalDependencies:
-      typescript: 5.2.2
+      typescript: 5.6.3
 
   abort-controller@3.0.0:
     dependencies:
@@ -2708,7 +2708,7 @@ snapshots:
     optionalDependencies:
       tsconfig-paths: 3.15.0
 
-  ts-node@10.9.1(@types/node@20.8.8)(typescript@5.2.2):
+  ts-node@10.9.2(@types/node@20.8.8)(typescript@5.6.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -2722,7 +2722,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.2.2
+      typescript: 5.6.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
@@ -2758,7 +2758,7 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@5.2.2: {}
+  typescript@5.6.3: {}
 
   undici-types@5.25.3: {}
 
@@ -2776,19 +2776,19 @@ snapshots:
 
   vary@1.1.2: {}
 
-  viem@2.21.0(typescript@5.2.2):
+  viem@2.21.0(typescript@5.6.3):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.4.0
       '@noble/hashes': 1.4.0
       '@scure/bip32': 1.4.0
       '@scure/bip39': 1.3.0
-      abitype: 1.0.5(typescript@5.2.2)
+      abitype: 1.0.5(typescript@5.6.3)
       isows: 1.0.4(ws@8.17.1)
       webauthn-p256: 0.0.5
       ws: 8.17.1
     optionalDependencies:
-      typescript: 5.2.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
