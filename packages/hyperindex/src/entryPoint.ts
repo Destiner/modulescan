@@ -47,6 +47,5 @@ async function handleAccountDeployedEvent(
     chainId: event.chainId,
     address,
     factory,
-    modules: [],
   });
 }

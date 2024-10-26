@@ -3,5 +3,41 @@ type Account {
   chainId: Int!
   address: String!
   factory: String!
-  modules: [String!]!
+  modules: [InstalledModule!]! @derivedFrom(field: "account")
+}
+
+type AccountModule {
+  id: ID!
+  chainId: Int!
+  address: String!
+}
+
+type InstalledModule {
+  id: ID!
+  chainId: Int!
+  account: Account!
+  accountModule: AccountModule!
+  moduleType: BigInt!
+}
+
+type ModuleInstallation {
+  id: ID!
+  chainId: Int!
+  account: Account!
+  accountModule: AccountModule!
+  moduleType: BigInt!
+  blockNumber: Int!
+  txHash: String!
+  logIndex: Int!
+}
+
+type ModuleUninstallation {
+  id: ID!
+  chainId: Int!
+  account: Account!
+  accountModule: AccountModule!
+  moduleType: BigInt!
+  blockNumber: Int!
+  txHash: String!
+  logIndex: Int!
 }

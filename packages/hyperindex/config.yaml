@@ -12,6 +12,9 @@ contracts:
     events:
       - event: ModuleInstalled(uint256 moduleTypeId, address module)
       - event: ModuleUninstalled(uint256 moduleTypeId, address module)
+field_selection:
+  transaction_fields:
+    - hash
 networks:
   - id: 1
     start_block: 0

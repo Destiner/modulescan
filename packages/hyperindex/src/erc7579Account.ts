@@ -20,11 +20,43 @@ async function handleModuleInstalledEvent(
 ) {
   const address = event.srcAddress.toLowerCase();
   const moduleAddress = event.params.module.toLowerCase();
-  const account = await context.Account.get(`${event.chainId}-${address}`);
-  if (account) {
-    account.modules.push(moduleAddress);
-    context.Account.set(account);
+  const moduleTypeId = event.params.moduleTypeId;
+  const accountId = `${event.chainId}-${address}`;
+  const accountModuleId = `${event.chainId}-${moduleAddress}`;
+
+  const accountModule = await context.AccountModule.get(accountModuleId);
+  if (!accountModule) {
+    context.AccountModule.set({
+      id: accountModuleId,
+      chainId: event.chainId,
+      address: moduleAddress,
+    });
   }
+
+  const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
+  const installedModule = await context.InstalledModule.get(installedModuleId);
+  if (!installedModule) {
+    context.InstalledModule.set({
+      id: installedModuleId,
+      chainId: event.chainId,
+      account_id: accountId,
+      accountModule_id: accountModuleId,
+      moduleType: moduleTypeId,
+    });
+  }
+
+  const txHash = event.transaction.hash;
+  const logIndex = event.logIndex;
+  context.ModuleInstallation.set({
+    id: `${event.chainId}-${txHash}-${logIndex}`,
+    chainId: event.chainId,
+    account_id: accountId,
+    accountModule_id: accountModuleId,
+    moduleType: moduleTypeId,
+    blockNumber: event.block.number,
+    txHash: txHash,
+    logIndex: logIndex,
+  });
 }
 
 async function handleModuleUninstalledEvent(
@@ -33,14 +65,25 @@ async function handleModuleUninstalledEvent(
 ) {
   const address = event.srcAddress.toLowerCase();
   const moduleAddress = event.params.module.toLowerCase();
-  const account = await context.Account.get(`${event.chainId}-${address}`);
-  if (account) {
-    context.Account.set({
-      id: account.id,
-      chainId: account.chainId,
-      address: account.address,
-      factory: account.factory,
-      modules: account.modules.filter((m: string) => m !== moduleAddress),
-    });
+  const moduleTypeId = event.params.moduleTypeId;
+  const accountId = `${event.chainId}-${address}`;
+
+  const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
+  const installedModule = await context.InstalledModule.get(installedModuleId);
+  if (installedModule) {
+    context.InstalledModule.deleteUnsafe(installedModuleId);
   }
+
+  const txHash = event.transaction.hash;
+  const logIndex = event.logIndex;
+  context.ModuleUninstallation.set({
+    id: `${event.chainId}-${txHash}-${logIndex}`,
+    chainId: event.chainId,
+    account_id: accountId,
+    accountModule_id: `${event.chainId}-${moduleAddress}`,
+    moduleType: moduleTypeId,
+    blockNumber: event.block.number,
+    txHash: txHash,
+    logIndex: logIndex,
+  });
 }
