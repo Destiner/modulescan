@@ -3,4 +3,5 @@ type Account {
   chainId: Int!
   address: String!
   factory: String!
+  modules: [String!]!
 }

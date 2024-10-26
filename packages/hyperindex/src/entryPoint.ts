@@ -33,7 +33,7 @@ async function handleAccountDeployedEvent(
   event: eventLog<EntryPointV0_7_0_AccountDeployed_eventArgs>,
   context: handlerContext
 ) {
-  const factory = event.params.factory;
+  const factory = event.params.factory.toLowerCase();
   const address = event.params.sender.toLowerCase();
 
   context.Account.set({
@@ -41,5 +41,6 @@ async function handleAccountDeployedEvent(
     chainId: event.chainId,
     address,
     factory,
+    modules: [],
   });
 }
