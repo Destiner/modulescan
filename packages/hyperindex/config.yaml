@@ -1,9 +1,5 @@
-# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: Greeter
-description: Greeter indexer
-#Global contract definitions that must contain all definitions except
-#addresses. Now you can share a single handler/abi/event definitions
-#for contracts across multiple chains
+name: ERC7579 Indexer
+description: ERC7579 Module Indexer
 contracts:
   - name: EntryPointV0_7_0
     abi_file_path: ./abis/entryPointV0_7_0.json
@@ -16,6 +12,4 @@ networks:
     contracts:
       - name: EntryPointV0_7_0
         address: "0x0000000071727De22E5E9d8BAf0edAc6f37da032"
-# Rollback on reorg mode currently incurs a performance hit on historical sync
-# while developing an indexer we recommend setting this to false
 rollback_on_reorg: false
