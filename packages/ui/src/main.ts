@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 
 import Account from '@/pages/Account.vue';
 import Home from '@/pages/Home.vue';
+import Module from '@/pages/Module.vue';
 
 import App from './App.vue';
 
@@ -11,7 +12,8 @@ const router = createRouter({
   history: routerHistory,
   routes: [
     { path: '/', component: Home },
-    { path: '/account/:address', component: Account },
+    { path: '/account/:chain/:address', component: Account },
+    { path: '/module/:chain/:address', component: Module },
   ],
 });
 

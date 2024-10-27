@@ -75,13 +75,9 @@
 </template>
 
 <script setup lang="ts">
-import ky from 'ky';
 import { ref, onMounted } from 'vue';
 
-interface GraphQLResponse<T> {
-  data?: T;
-  errors?: Array<{ message: string }>;
-}
+import { request } from '@/utils/graphQl';
 
 interface Account {
   id: string;
@@ -125,36 +121,6 @@ onMounted(() => {
   fetch();
 });
 
-async function graphqlRequest<T>(
-  query: string,
-  variables?: Record<string, unknown>,
-): Promise<T> {
-  const endpoint = 'https://indexer.bigdevenergy.link/e8000fd/v1/graphql';
-
-  const response: GraphQLResponse<T> = await ky
-    .post(endpoint, {
-      json: {
-        query,
-        variables,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        // Add any additional headers here, such as authentication tokens
-      },
-    })
-    .json();
-
-  if (response.errors) {
-    throw new Error(response.errors.map((e) => e.message).join(', '));
-  }
-
-  if (!response.data) {
-    throw new Error('No data returned from GraphQL server');
-  }
-
-  return response.data;
-}
-
 async function fetch(): Promise<void> {
   fetchLatestAccounts();
   fetchLatestInstallations();
@@ -179,7 +145,7 @@ async function fetchLatestAccounts(): Promise<void> {
     }
   `;
 
-  const data = await graphqlRequest<{ recentAccounts: Account[] }>(query);
+  const data = await request<{ recentAccounts: Account[] }>(query);
   recentAccounts.value = data.recentAccounts;
 }
 
@@ -206,7 +172,7 @@ async function fetchLatestInstallations(): Promise<void> {
     }
   `;
 
-  const data = await graphqlRequest<{
+  const data = await request<{
     recentInstallations: ModuleInstallation[];
   }>(query);
   recentInstallations.value = data.recentInstallations;
@@ -235,7 +201,7 @@ async function fetchLatestUninstallations(): Promise<void> {
     }
   `;
 
-  const data = await graphqlRequest<{
+  const data = await request<{
     recentUninstallations: ModuleUninstallation[];
   }>(query);
   recentUninstallations.value = data.recentUninstallations;
@@ -263,6 +229,7 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-  background-color: #f2f2f2;
+  background-color: #e8e8e8;
+  cursor: pointer;
 }
 </style>
