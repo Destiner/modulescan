@@ -2,11 +2,24 @@
 
 [ERC-7579](https://erc7579.com) smart account module activity
 
-Uses HyperIndex to index module installations and uninstallations, as well as tracking the currently installed modules for each account.
+Uses [Envio](https://envio.dev) as the data layer.
 
-Use HyperSync to fetch traces to get the installation data (Ethereum only).
+- Uses HyperIndex to index module installations and uninstallations, as well as tracking the currently installed modules for each account.
+- Uses HyperSync to fetch traces to get the installation data (Ethereum only).
 
-## Indexer
+## Problem
+
+ERC-7579 presents an interoperable plugin system for smart accounts. Smart accounts can install the compatible plugins with out vendor lock, enjoying interopera
+
+Yet, there is a lack of data tooling around the standard. It's quite challenging to get the module installations, especially as the number of chains increases.
+
+## Solution
+
+Envio offers exactly what we need to solve this. First, we create multi-chain indexer using HyperIndex, tracking not only the accounts themselves, but all the current and historical module installations for each of them. Then, we enrich that data further using HyperSync, fetching historical traces to get the module installation data.
+
+## Architecture
+
+### Indexer
 
 [Package](./packages/hyperindex/)
 
@@ -25,7 +38,7 @@ Indexing a two-step process:
 - Maintains the list of `InstalledModule` entites for each account
 - `modules` list of the `Account` entity is updated automatically using the `@derivedFrom` property
 
-## UI
+### UI
 
 [Package](./packages/ui/)
 
@@ -33,19 +46,17 @@ Link: https://modulescan-ui.vercel.app/
 
 Example account with module data: https://modulescan-ui.vercel.app/account/1/0xfeb4037cd7c43f59666066a19b385b7fbaaf8d37
 
-### Screenshots
+#### Screenshots
 
-#### Home page: latest activity
+Home page: latest activity
 
 <img width="1709" alt="Screenshot 2024-10-27 at 08 25 48" src="https://github.com/user-attachments/assets/14e2b118-2d9a-40f1-999d-b5491fb91be5">
 
-
-#### Account page
+Account page
 
 <img width="1710" alt="Screenshot 2024-10-27 at 08 26 02" src="https://github.com/user-attachments/assets/bee59b78-a1a8-465d-ab98-22cb7ffb280c">
 
-
-#### Module page
+Module page
 
 <img width="1709" alt="Screenshot 2024-10-27 at 08 26 11" src="https://github.com/user-attachments/assets/83711a74-777f-4f04-be73-42e5256ae98c">
 
