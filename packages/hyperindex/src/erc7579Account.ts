@@ -64,26 +64,28 @@ async function handleModuleUninstalledEvent(
   event: eventLog<ERC7579Account_ModuleUninstalled_eventArgs>,
   context: handlerContext
 ) {
-  //   const address = event.srcAddress.toLowerCase();
-  //   const moduleAddress = event.params.module.toLowerCase();
-  //   const moduleTypeId = event.params.moduleTypeId;
-  //   const accountId = `${event.chainId}-${address}`;
-  //   const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
-  //   const installedModule = await context.InstalledModule.get(installedModuleId);
-  //   if (installedModule) {
-  //     context.InstalledModule.deleteUnsafe(installedModuleId);
-  //   }
-  //   const txHash = event.transaction.hash;
-  //   const logIndex = event.logIndex;
-  //   context.ModuleUninstallation.set({
-  //     id: `${event.chainId}-${txHash}-${logIndex}`,
-  //     chainId: event.chainId,
-  //     account_id: accountId,
-  //     accountModule_id: `${event.chainId}-${moduleAddress}`,
-  //     moduleType: moduleTypeId,
-  //     blockNumber: event.block.number,
-  //     txHash: txHash,
-  //     logIndex: logIndex,
-  //     timestamp: event.block.timestamp,
-  //   });
+  const address = event.srcAddress.toLowerCase();
+  const moduleAddress = event.params.module.toLowerCase();
+  const moduleTypeId = event.params.moduleTypeId;
+  const accountId = `${event.chainId}-${address}`;
+
+  // const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
+  // const installedModule = await context.InstalledModule.get(installedModuleId);
+  // if (installedModule) {
+  //   context.InstalledModule.deleteUnsafe(installedModuleId);
+  // }
+
+  const txHash = event.transaction.hash;
+  const logIndex = event.logIndex;
+  context.ModuleUninstallation.set({
+    id: `${event.chainId}-${txHash}-${logIndex}`,
+    chainId: event.chainId,
+    account_id: accountId,
+    accountModule_id: `${event.chainId}-${moduleAddress}`,
+    moduleType: moduleTypeId,
+    blockNumber: event.block.number,
+    txHash: txHash,
+    logIndex: logIndex,
+    timestamp: event.block.timestamp,
+  });
 }
