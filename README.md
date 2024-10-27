@@ -1,15 +1,13 @@
 # modulescan
 
-To install dependencies:
+## Indexer
 
-```bash
-bun install
-```
+[Package](./packages/hyperindex/)
 
-To run:
+Link: https://envio.dev/app/destiner/modulescan/3e770dc
 
-```bash
-bun run index.ts
-```
+## UI
 
-This project was created using `bun init` in bun v1.1.18. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+[Package](./packages/ui/)
+
+Link: https://modulescan-ui-git-main-destiner-labs.vercel.app/
