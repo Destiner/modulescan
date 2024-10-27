@@ -69,11 +69,11 @@ async function handleModuleUninstalledEvent(
   const moduleTypeId = event.params.moduleTypeId;
   const accountId = `${event.chainId}-${address}`;
 
-  // const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
-  // const installedModule = await context.InstalledModule.get(installedModuleId);
-  // if (installedModule) {
-  //   context.InstalledModule.deleteUnsafe(installedModuleId);
-  // }
+  const installedModuleId = `${event.chainId}-${address}-${moduleAddress}-${moduleTypeId}`;
+  const installedModule = await context.InstalledModule.get(installedModuleId);
+  if (installedModule) {
+    context.InstalledModule.deleteUnsafe(installedModuleId);
+  }
 
   const txHash = event.transaction.hash;
   const logIndex = event.logIndex;
