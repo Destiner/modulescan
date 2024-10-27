@@ -12,6 +12,19 @@ Use HyperSync to fetch traces to get the installation data (Ethereum only).
 
 Link: https://envio.dev/app/destiner/modulescan/3e770dc
 
+Indexing a two-step process:
+
+1. Index `AccountDeployed` event from the EntryPoint contract to track accounts
+
+- Uses `factory` field to filter out non ERC7579-compatible accounts
+- Adds each compatible account to the indexer
+
+2. Indexes `ModuleInstalled` and `ModuleUninstalled` events for each tracked account to track module activity
+
+- Creates `ModuleInstallation` and `ModuleUninstallation` entities for each new indexed event
+- Maintains the list of `InstalledModule` entites for each account
+- `modules` list of the `Account` entity is updated automatically using the `@derivedFrom` property
+
 ## UI
 
 [Package](./packages/ui/)
