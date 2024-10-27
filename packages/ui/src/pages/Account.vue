@@ -30,7 +30,6 @@
       <table>
         <thead>
           <tr>
-            <th>Chain ID</th>
             <th>Module</th>
             <th>Module Type</th>
             <th>Timestamp</th>
@@ -41,7 +40,6 @@
             v-for="installation in moduleInstallations"
             :key="installation.id"
           >
-            <td>{{ installation.chainId }}</td>
             <td>{{ installation.accountModule.address }}</td>
             <td>{{ installation.moduleType }}</td>
             <td>{{ installation.timestamp }}</td>
@@ -54,7 +52,6 @@
       <table>
         <thead>
           <tr>
-            <th>Chain ID</th>
             <th>Module</th>
             <th>Module Type</th>
             <th>Timestamp</th>
@@ -65,7 +62,6 @@
             v-for="uninstallation in moduleUninstallations"
             :key="uninstallation.id"
           >
-            <td>{{ uninstallation.chainId }}</td>
             <td>{{ uninstallation.accountModule.address }}</td>
             <td>{{ uninstallation.moduleType }}</td>
             <td>{{ uninstallation.timestamp }}</td>
@@ -97,7 +93,6 @@ interface InstalledModule {
 
 interface ModuleInstallation {
   id: string;
-  chainId: number;
   accountModule: {
     address: string;
   };
@@ -107,7 +102,6 @@ interface ModuleInstallation {
 
 interface ModuleUninstallation {
   id: string;
-  chainId: number;
   accountModule: {
     address: string;
   };
@@ -178,7 +172,6 @@ async function fetchLatestInstallations(): Promise<void> {
         limit: 10
       ) {
         id
-        chainId
         accountModule {
           address
         }
@@ -214,7 +207,6 @@ async function fetchLatestUninstallations(): Promise<void> {
         limit: 10
       ) {
         id
-        chainId
         accountModule {
           address
         }
