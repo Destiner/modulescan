@@ -19,7 +19,19 @@
             v-for="module in installedModules"
             :key="module.id"
           >
-            <td>{{ module.accountModule.address }}</td>
+            <td>
+              <RouterLink
+                :to="{
+                  name: 'module',
+                  params: {
+                    chain: chainId,
+                    address: module.accountModule.address,
+                  },
+                }"
+              >
+                {{ module.accountModule.address }}
+              </RouterLink>
+            </td>
             <td>{{ module.moduleType }}</td>
           </tr>
         </tbody>
@@ -41,6 +53,19 @@
             :key="installation.id"
           >
             <td>{{ installation.accountModule.address }}</td>
+            <td>
+              <RouterLink
+                :to="{
+                  name: 'module',
+                  params: {
+                    chain: chainId,
+                    address: installation.accountModule.address,
+                  },
+                }"
+              >
+                {{ installation.accountModule.address }}
+              </RouterLink>
+            </td>
             <td>{{ installation.moduleType }}</td>
             <td>{{ installation.timestamp }}</td>
           </tr>
@@ -62,7 +87,19 @@
             v-for="uninstallation in moduleUninstallations"
             :key="uninstallation.id"
           >
-            <td>{{ uninstallation.accountModule.address }}</td>
+            <td>
+              <RouterLink
+                :to="{
+                  name: 'module',
+                  params: {
+                    chain: chainId,
+                    address: uninstallation.accountModule.address,
+                  },
+                }"
+              >
+                {{ uninstallation.accountModule.address }}
+              </RouterLink>
+            </td>
             <td>{{ uninstallation.moduleType }}</td>
             <td>{{ uninstallation.timestamp }}</td>
           </tr>
@@ -74,7 +111,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, RouterLink } from 'vue-router';
 
 import { request } from '@/utils/graphQl';
 

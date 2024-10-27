@@ -1,6 +1,18 @@
 <template>
   <div>
-    <h1>Home page</h1>
+    <h1>ModuleScan</h1>
+    <div>
+      <span>
+        <a
+          href="https://erc7579.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ERC-7579
+        </a>
+      </span>
+      smart account module activity
+    </div>
     <h2>Recent accounts</h2>
     <table>
       <thead>
@@ -17,7 +29,16 @@
           :key="account.id"
         >
           <td>{{ account.chainId }}</td>
-          <td>{{ account.address }}</td>
+          <td>
+            <RouterLink
+              :to="{
+                name: 'account',
+                params: { chain: account.chainId, address: account.address },
+              }"
+            >
+              {{ account.address }}
+            </RouterLink>
+          </td>
           <td>{{ account.factory }}</td>
           <td>{{ account.createdAt }}</td>
         </tr>
@@ -40,8 +61,32 @@
           :key="installation.id"
         >
           <td>{{ installation.chainId }}</td>
-          <td>{{ installation.account.address }}</td>
-          <td>{{ installation.accountModule.address }}</td>
+          <td>
+            <RouterLink
+              :to="{
+                name: 'account',
+                params: {
+                  chain: installation.chainId,
+                  address: installation.account.address,
+                },
+              }"
+            >
+              {{ installation.account.address }}
+            </RouterLink>
+          </td>
+          <td>
+            <RouterLink
+              :to="{
+                name: 'module',
+                params: {
+                  chain: installation.chainId,
+                  address: installation.accountModule.address,
+                },
+              }"
+            >
+              {{ installation.accountModule.address }}
+            </RouterLink>
+          </td>
           <td>{{ installation.moduleType }}</td>
           <td>{{ installation.timestamp }}</td>
         </tr>
@@ -64,8 +109,32 @@
           :key="uninstallation.id"
         >
           <td>{{ uninstallation.chainId }}</td>
-          <td>{{ uninstallation.account.address }}</td>
-          <td>{{ uninstallation.accountModule.address }}</td>
+          <td>
+            <RouterLink
+              :to="{
+                name: 'account',
+                params: {
+                  chain: uninstallation.chainId,
+                  address: uninstallation.account.address,
+                },
+              }"
+            >
+              {{ uninstallation.account.address }}
+            </RouterLink>
+          </td>
+          <td>
+            <RouterLink
+              :to="{
+                name: 'module',
+                params: {
+                  chain: uninstallation.chainId,
+                  address: uninstallation.accountModule.address,
+                },
+              }"
+            >
+              {{ uninstallation.accountModule.address }}
+            </RouterLink>
+          </td>
           <td>{{ uninstallation.moduleType }}</td>
           <td>{{ uninstallation.timestamp }}</td>
         </tr>
@@ -76,6 +145,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 
 import { request } from '@/utils/graphQl';
 

@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <RouterLink :to="{ name: 'home' }">Home</RouterLink>
     <RouterView />
   </div>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->

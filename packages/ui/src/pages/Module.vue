@@ -20,7 +20,19 @@
             v-for="installation in moduleInstallations"
             :key="installation.id"
           >
-            <td>{{ installation.account.address }}</td>
+            <td>
+              <RouterLink
+                :to="{
+                  name: 'account',
+                  params: {
+                    chain: chainId,
+                    address: installation.account.address,
+                  },
+                }"
+              >
+                {{ installation.account.address }}
+              </RouterLink>
+            </td>
             <td>{{ installation.moduleType }}</td>
             <td>{{ installation.timestamp }}</td>
           </tr>
@@ -42,7 +54,19 @@
             v-for="uninstallation in moduleUninstallations"
             :key="uninstallation.id"
           >
-            <td>{{ uninstallation.account.address }}</td>
+            <td>
+              <RouterLink
+                :to="{
+                  name: 'account',
+                  params: {
+                    chain: chainId,
+                    address: uninstallation.account.address,
+                  },
+                }"
+              >
+                {{ uninstallation.account.address }}
+              </RouterLink>
+            </td>
             <td>{{ uninstallation.moduleType }}</td>
             <td>{{ uninstallation.timestamp }}</td>
           </tr>
@@ -54,7 +78,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, RouterLink } from 'vue-router';
 
 import { request } from '@/utils/graphQl';
 
