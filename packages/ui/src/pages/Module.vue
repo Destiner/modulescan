@@ -13,6 +13,8 @@
             <th>Account</th>
             <th>Module Type</th>
             <th>Timestamp</th>
+            <th>Transaction Hash</th>
+            <th>Log Index</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +37,8 @@
             </td>
             <td>{{ installation.moduleType }}</td>
             <td>{{ installation.timestamp }}</td>
+            <td>{{ installation.txHash }}</td>
+            <td>{{ installation.logIndex }}</td>
           </tr>
         </tbody>
       </table>
@@ -47,6 +51,8 @@
             <th>Account</th>
             <th>Module Type</th>
             <th>Timestamp</th>
+            <th>Transaction Hash</th>
+            <th>Log Index</th>
           </tr>
         </thead>
         <tbody>
@@ -69,6 +75,8 @@
             </td>
             <td>{{ uninstallation.moduleType }}</td>
             <td>{{ uninstallation.timestamp }}</td>
+            <td>{{ uninstallation.txHash }}</td>
+            <td>{{ uninstallation.logIndex }}</td>
           </tr>
         </tbody>
       </table>
@@ -94,6 +102,8 @@ interface ModuleInstallation {
   };
   moduleType: string;
   timestamp: number;
+  txHash: string;
+  logIndex: number;
 }
 
 interface ModuleUninstallation {
@@ -103,6 +113,8 @@ interface ModuleUninstallation {
   };
   moduleType: string;
   timestamp: number;
+  txHash: string;
+  logIndex: number;
 }
 
 const moduleInstallations = ref<ModuleInstallation[]>([]);
@@ -142,6 +154,8 @@ async function fetchLatestInstallations(): Promise<void> {
         }
         moduleType
         timestamp
+        txHash
+        logIndex
       }
     }
   `;
@@ -177,6 +191,8 @@ async function fetchLatestUninstallations(): Promise<void> {
         }
         moduleType
         timestamp
+        txHash
+        logIndex
       }
     }
   `;

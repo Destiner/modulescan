@@ -5,18 +5,19 @@
       <p>Chain ID: {{ chainId }}</p>
       <p>Address: {{ address }}</p>
     </div>
-    <div v-if="installedModules.length > 0">
+    <div v-if="installedModulesWithData.length > 0">
       <h2>Active modules</h2>
       <table>
         <thead>
           <tr>
             <th>Module Address</th>
             <th>Module Type</th>
+            <th>Data</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="module in installedModules"
+            v-for="module in installedModulesWithData"
             :key="module.id"
           >
             <td>
@@ -33,6 +34,7 @@
               </RouterLink>
             </td>
             <td>{{ module.moduleType }}</td>
+            <td>{{ module.data }}</td>
           </tr>
         </tbody>
       </table>
@@ -45,6 +47,8 @@
             <th>Module</th>
             <th>Module Type</th>
             <th>Timestamp</th>
+            <th>Transaction Hash</th>
+            <th>Log Index</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +71,8 @@
             </td>
             <td>{{ installation.moduleType }}</td>
             <td>{{ installation.timestamp }}</td>
+            <td>{{ installation.txHash }}</td>
+            <td>{{ installation.logIndex }}</td>
           </tr>
         </tbody>
       </table>
@@ -79,6 +85,8 @@
             <th>Module</th>
             <th>Module Type</th>
             <th>Timestamp</th>
+            <th>Transaction Hash</th>
+            <th>Log Index</th>
           </tr>
         </thead>
         <tbody>
@@ -101,6 +109,8 @@
             </td>
             <td>{{ uninstallation.moduleType }}</td>
             <td>{{ uninstallation.timestamp }}</td>
+            <td>{{ uninstallation.txHash }}</td>
+            <td>{{ uninstallation.logIndex }}</td>
           </tr>
         </tbody>
       </table>
@@ -109,10 +119,13 @@
 </template>
 
 <script setup lang="ts">
+import { decodeFunctionData, Hex } from 'viem';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 
+import erc7579AccountAbi from '@/abi/erc7579Account.js';
 import { request } from '@/utils/graphQl';
+import { fetchTraces } from '@/utils/hyperSync';
 
 const route = useRoute();
 
@@ -127,6 +140,8 @@ interface InstalledModule {
   moduleType: string;
 }
 
+type InstalledModuleWithData = InstalledModule & { data: string | undefined };
+
 interface ModuleInstallation {
   id: string;
   accountModule: {
@@ -134,6 +149,8 @@ interface ModuleInstallation {
   };
   moduleType: string;
   timestamp: number;
+  txHash: string;
+  logIndex: number;
 }
 
 interface ModuleUninstallation {
@@ -143,20 +160,43 @@ interface ModuleUninstallation {
   };
   moduleType: string;
   timestamp: number;
+  txHash: string;
+  logIndex: number;
+}
+
+interface ModuleData {
+  module: string;
+  data: string;
 }
 
 const installedModules = ref<InstalledModule[]>([]);
 const moduleInstallations = ref<ModuleInstallation[]>([]);
 const moduleUninstallations = ref<ModuleUninstallation[]>([]);
+const moduleData = ref<ModuleData[]>([]);
+
+const installedModulesWithData = computed<InstalledModuleWithData[]>(() =>
+  installedModules.value.map((module) => {
+    const data = moduleData.value.find(
+      (data) => data.module === module.accountModule.address,
+    );
+    return {
+      ...module,
+      data: data?.data,
+    };
+  }),
+);
 
 onMounted(() => {
   fetch();
 });
 
 async function fetch(): Promise<void> {
-  fetchInstalledModules();
-  fetchLatestInstallations();
-  fetchLatestUninstallations();
+  await Promise.all([
+    fetchInstalledModules(),
+    fetchLatestInstallations(),
+    fetchLatestUninstallations(),
+  ]);
+  await fetchModuleData();
 }
 
 async function fetchInstalledModules(): Promise<void> {
@@ -213,6 +253,8 @@ async function fetchLatestInstallations(): Promise<void> {
         }
         moduleType
         timestamp
+        txHash
+        logIndex
       }
     }
   `;
@@ -248,6 +290,8 @@ async function fetchLatestUninstallations(): Promise<void> {
         }
         moduleType
         timestamp
+        txHash
+        logIndex
       }
     }
   `;
@@ -256,6 +300,26 @@ async function fetchLatestUninstallations(): Promise<void> {
     moduleUninstallations: ModuleUninstallation[];
   }>(query);
   moduleUninstallations.value = data.moduleUninstallations;
+}
+
+async function fetchModuleData(): Promise<void> {
+  const modules = installedModules.value.map(
+    (module) => module.accountModule.address,
+  );
+  const traces = await fetchTraces(chainId.value, address.value, modules);
+  const installationTraces = traces.filter((trace) =>
+    trace.input.startsWith('0x6d61fe70'),
+  );
+  moduleData.value = installationTraces.map((trace) => {
+    const data = decodeFunctionData({
+      abi: erc7579AccountAbi,
+      data: trace.input as Hex,
+    });
+    return {
+      module: trace.to,
+      data: data.args[0],
+    };
+  });
 }
 </script>
 
