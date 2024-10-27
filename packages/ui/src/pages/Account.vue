@@ -52,7 +52,6 @@
             v-for="installation in moduleInstallations"
             :key="installation.id"
           >
-            <td>{{ installation.accountModule.address }}</td>
             <td>
               <RouterLink
                 :to="{
