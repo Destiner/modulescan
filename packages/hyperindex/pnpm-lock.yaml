@@ -11,6 +11,9 @@ importers:
       envio:
         specifier: 2.6.1
         version: 2.6.1
+      viem:
+        specifier: 2.21.0
+        version: 2.21.0(typescript@5.2.2)
     optionalDependencies:
       generated:
         specifier: ./generated
