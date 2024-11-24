@@ -1,4 +1,3 @@
-import { type QuickNodeChain } from "evm-providers";
 import { type Chain } from "viem";
 import {
   arbitrum,
@@ -72,7 +71,7 @@ const SCROLL_SEPOLIA = scrollSepolia.id;
 const ZKSYNC_ERA = zksync.id;
 const ZKSYNC_ERA_SEPOLIA = zksyncSepoliaTestnet.id;
 
-function toChain(id: QuickNodeChain): Chain {
+function toChain(id: number): Chain | null {
   switch (id) {
     case ARBITRUM: {
       return arbitrum;
@@ -175,6 +174,9 @@ function toChain(id: QuickNodeChain): Chain {
     }
     case ZKSYNC_ERA_SEPOLIA: {
       return zksyncSepoliaTestnet;
+    }
+    default: {
+      return null;
     }
   }
 }

@@ -1,4 +1,3 @@
-import { type QuickNodeChain, quicknode } from "evm-providers";
 import { Address, createPublicClient, Hex, http, padHex, zeroHash } from "viem";
 
 import {
@@ -10,12 +9,6 @@ import {
 } from "generated";
 
 import { toChain } from "./chains";
-
-const quicknodeAppName = process.env.VITE_QUICKNODE_APP_NAME;
-const quicknodeAppKey = process.env.VITE_QUICKNODE_APP_KEY;
-
-const KERNEL_V3_META_FACTORY_ADDRESS =
-  "0xd703aae79538628d27099b8c4f621be4ccd142d5";
 
 // Compatible account implementations
 // Currently, Kernel V3 and Biconomy Nexus are supported
@@ -33,7 +26,7 @@ async function handleAccountDeployedContractRegister(
   event: eventLog<EntryPointV0_7_0_AccountDeployed_eventArgs>,
   context: contractRegistrations
 ) {
-  const chainId = event.chainId as QuickNodeChain;
+  const chainId = event.chainId;
   const address = event.params.sender.toLowerCase() as Address;
 
   const implementation = await getImplementation(chainId, address);
@@ -56,7 +49,7 @@ async function handleAccountDeployedEvent(
   context: handlerContext
 ) {
   const factory = event.params.factory.toLowerCase();
-  const chainId = event.chainId as QuickNodeChain;
+  const chainId = event.chainId;
   const address = event.params.sender.toLowerCase() as Address;
   const createdAt = event.block.timestamp;
 
@@ -79,7 +72,7 @@ async function handleAccountDeployedEvent(
 }
 
 async function getImplementation(
-  chainId: QuickNodeChain,
+  chainId: number,
   address: Address
 ): Promise<Address | null> {
   function toAddress(slotValue: Hex | undefined): Address | null {
@@ -100,17 +93,13 @@ async function getImplementation(
   const EIP1967_IMPL_SLOT =
     "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
 
-  if (!quicknodeAppName) {
-    throw new Error("Quicknode app name not available");
-  }
-  if (!quicknodeAppKey) {
-    throw new Error("Quicknode app key not available");
-  }
-
   const chain = toChain(chainId);
+  if (!chain) {
+    throw new Error("Unable to get chain data");
+  }
   const client = createPublicClient({
     chain,
-    transport: http(quicknode(chainId, quicknodeAppName, quicknodeAppKey)),
+    transport: http(),
   });
 
   const slotValue = await client.getStorageAt({
