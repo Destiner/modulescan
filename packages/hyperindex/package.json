@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "envio": "2.6.1",
+    "evm-providers": "^0.4.6",
     "viem": "2.21.0"
   },
   "optionalDependencies": {
