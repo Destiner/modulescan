@@ -73,6 +73,7 @@ async function handleAccountDeployedEvent(
     chainId: event.chainId,
     address,
     factory,
+    implementation,
     createdAt,
   });
 }
