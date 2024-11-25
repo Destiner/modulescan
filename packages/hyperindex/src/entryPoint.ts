@@ -99,7 +99,7 @@ async function getImplementation(
   }
   const client = createPublicClient({
     chain,
-    transport: http(),
+    transport: http(`https://${chain.id}.rpc.hypersync.xyz`),
   });
 
   const slotValue = await client.getStorageAt({
