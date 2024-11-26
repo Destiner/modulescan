@@ -1,4 +1,4 @@
-import { Address, createPublicClient, Hex, http, padHex, zeroHash } from "viem";
+import { Address } from "viem";
 
 import {
   contractRegistrations,
@@ -8,15 +8,12 @@ import {
   handlerContext,
 } from "generated";
 
-import { toChain } from "./chains";
+const KERNEL_V3_META_FACTORY = "0xd703aae79538628d27099b8c4f621be4ccd142d5";
+const BICONOMY_NEXUS_K1_FACTORY = "0x00000bb19a3579f4d779215def97afbd0e30db55";
 
-// Compatible account implementations
+// Compatible account factories
 // Currently, Kernel V3 and Biconomy Nexus are supported
-const IMPLEMENTATIONS = [
-  "0x94f097e1ebeb4eca3aae54cabb08905b239a7d27",
-  "0xbac849bb641841b44e965fb01a4bf5f074f84b4d",
-  "0x000000039dfcad030719b07296710f045f0558f7",
-];
+const FACTORIES = [KERNEL_V3_META_FACTORY, BICONOMY_NEXUS_K1_FACTORY];
 
 EntryPointV0_7_0.AccountDeployed.contractRegister(({ event, context }) => {
   handleAccountDeployedContractRegister(event, context);
@@ -26,14 +23,10 @@ async function handleAccountDeployedContractRegister(
   event: eventLog<EntryPointV0_7_0_AccountDeployed_eventArgs>,
   context: contractRegistrations
 ) {
-  const chainId = event.chainId;
+  const factory = event.params.factory.toLowerCase();
   const address = event.params.sender.toLowerCase() as Address;
 
-  const implementation = await getImplementation(chainId, address);
-  if (!implementation) {
-    return;
-  }
-  if (!IMPLEMENTATIONS.includes(implementation)) {
+  if (!FACTORIES.includes(factory)) {
     return;
   }
 
@@ -49,15 +42,10 @@ async function handleAccountDeployedEvent(
   context: handlerContext
 ) {
   const factory = event.params.factory.toLowerCase();
-  const chainId = event.chainId;
   const address = event.params.sender.toLowerCase() as Address;
   const createdAt = event.block.timestamp;
 
-  const implementation = await getImplementation(chainId, address);
-  if (!implementation) {
-    return;
-  }
-  if (!IMPLEMENTATIONS.includes(implementation)) {
+  if (!FACTORIES.includes(factory)) {
     return;
   }
 
@@ -66,49 +54,6 @@ async function handleAccountDeployedEvent(
     chainId: event.chainId,
     address,
     factory,
-    implementation,
     createdAt,
   });
-}
-
-async function getImplementation(
-  chainId: number,
-  address: Address
-): Promise<Address | null> {
-  function toAddress(slotValue: Hex | undefined): Address | null {
-    if (!slotValue) {
-      return null;
-    }
-    if (slotValue === zeroHash) {
-      return null;
-    }
-    const address = `0x${slotValue.slice(-40)}` as Address;
-    // First 12 bytes should be zero
-    if (padHex(address) !== slotValue) {
-      return null;
-    }
-    return address;
-  }
-
-  const EIP1967_IMPL_SLOT =
-    "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
-
-  const chain = toChain(chainId);
-  if (!chain) {
-    throw new Error("Unable to get chain data");
-  }
-  const client = createPublicClient({
-    chain,
-    transport: http(`https://${chain.id}.rpc.hypersync.xyz`),
-  });
-
-  const slotValue = await client.getStorageAt({
-    address,
-    slot: EIP1967_IMPL_SLOT,
-  });
-  const slotAddress = toAddress(slotValue);
-  if (slotAddress) {
-    return slotAddress;
-  }
-  return null;
 }

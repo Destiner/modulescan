@@ -3,7 +3,6 @@ type Account {
   chainId: Int!
   address: String!
   factory: String!
-  implementation: String!
   modules: [InstalledModule!]! @derivedFrom(field: "account")
   createdAt: Int!
 }
